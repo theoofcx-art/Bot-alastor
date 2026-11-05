@@ -1,0 +1,19 @@
+{
+  "botName": "Alastor",
+  "creator": "© ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪",
+  "ownerNumber": "5511999999999",
+  "prefix": "!",
+  "menuThumb": "https://i.ibb.co/68v88Qc/alastor-menu.jpg",
+  "apiKey": "alastor_secret_token_99",
+  "apiSite": "https://api.alastor-bot.com",
+  "radioFrequency": "66.6 FM",
+  "autoRead": false,
+  "antiLink": true,
+  "antiSpam": true,
+  "antiFake": false,
+  "antiTrava": true,
+  "welcomeMessage": true,
+  "welcomeText": "📻 Seja muito bem-vindo(a) ao grupo! Leia as regras e divirta-se!",
+  "goodbyeText": "👋 Um mortal deixou nossa frequência... Menos uma alma!",
+  "rentMode": true
+}
