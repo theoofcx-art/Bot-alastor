@@ -252,6 +252,57 @@ export const TermuxTerminal: React.FC<TermuxTerminalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Troubleshooting card for npm error ERESOLVE / esbuild */}
+      <div className="bg-red-950/30 border border-red-600/50 rounded-2xl p-6 shadow-xl space-y-4">
+        <div className="flex items-center gap-2.5">
+          <ShieldAlert className="w-6 h-6 text-red-400 shrink-0" />
+          <div>
+            <h3 className="text-base font-bold text-white tracking-tight">
+              ⚠️ Deu erro "npm error ERESOLVE / esbuild / vite"? Veja o motivo e como resolver:
+            </h3>
+            <p className="text-xs text-red-200 mt-0.5">
+              Identificamos exatamente o erro do seu print no Termux!
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
+          <div className="bg-[#10141f] border border-red-900/40 rounded-xl p-3.5 space-y-2">
+            <span className="font-bold text-red-300 block text-xs">
+              1. Por que deu esse erro?
+            </span>
+            <p className="text-[11px] leading-relaxed text-slate-300">
+              • Você tentou dar <code className="text-red-300 font-mono">npm install</code> dentro de <code className="text-yellow-300 font-mono">/sdcard/Bot-alastor</code>.<br />
+              • Essa pasta continha o <strong>site/simulador web em Vite</strong> (por isso reclamou do Vite e esbuild), e a memória interna <code className="text-yellow-300 font-mono">/sdcard/</code> do Android não permite links simbólicos do Linux!<br />
+              • O <strong>bot real do WhatsApp</strong> NÃO usa Vite e nem esbuild! Ele usa apenas o Baileys e roda na pasta <code className="text-emerald-300 font-mono">~/alastorbot</code>.
+            </p>
+          </div>
+
+          <div className="bg-[#10141f] border border-emerald-900/40 rounded-xl p-3.5 space-y-2">
+            <span className="font-bold text-emerald-300 block text-xs">
+              2. Como resolver agora no Termux (Copie e Cole):
+            </span>
+            <div className="bg-black/70 p-2.5 rounded font-mono text-[11px] text-emerald-200 select-all space-y-1">
+              <p className="text-slate-500"># 1. Vá para a raiz do Termux:</p>
+              <p className="text-emerald-300">cd ~</p>
+              <p className="text-slate-500"># 2. Copie e extraia o bot do zip:</p>
+              <p className="text-emerald-300">cp /sdcard/Download/alastorbot.zip ~/ && unzip -o alastorbot.zip</p>
+              <p className="text-slate-500"># 3. Entre na pasta alastorbot e instale:</p>
+              <p className="text-emerald-300">cd ~/alastorbot && npm install && npm start</p>
+            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText('cd ~ && termux-setup-storage && cp /sdcard/Download/alastorbot.zip ~/ && unzip -o alastorbot.zip && cd ~/alastorbot && npm install && npm start');
+                alert('Comando copiado! Cole no seu Termux.');
+              }}
+              className="w-full py-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 rounded text-[11px] font-semibold transition cursor-pointer"
+            >
+              Copiar Solução Rápida do Termux
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
