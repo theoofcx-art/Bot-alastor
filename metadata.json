@@ -1,0 +1,6 @@
+{
+  "name": "Alastor Bot - WhatsApp Termux Studio",
+  "description": "Gerador e simulador do bot de WhatsApp Alastor estilo Nazuna Bot para Termux com conexão por código de pareamento, menus interativos, comandos de ADM, membros, brincadeiras e painel do dono por © ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
