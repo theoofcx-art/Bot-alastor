@@ -1,9 +1,9 @@
 /**
- * ====================================================================
- *  📻 ALASTOR BOT - WHATSAPP BAILEYS (CONEXÃO POR CÓDIGO DE PAREAMENTO)
- *  👑 CRIADOR: © ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪
+ * ============================================================================
+ *  📻 ALASTOR BOT - MULTI-DEVICE (Inspirado no Nazuna Bot de DevTokyoVx/nazuna)
+ *  👑 CRIADOR OFICIAL: © ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪
  *  🌐 REPOSITÓRIO: https://github.com/theoofcx-art/Bot-alastor
- * ====================================================================
+ * ============================================================================
  */
 
 const {
@@ -11,146 +11,229 @@ const {
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
+  Browsers,
   delay
 } = require('@whiskeysockets/baileys');
-
-const pino = require('pino');
-const readline = require('readline');
+const P = require('pino');
+const cfonts = require('cfonts');
+const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
-const cfonts = require('cfonts');
+const readline = require('readline');
+const { Boom } = require('@hapi/boom');
 
-// Garantir pastas de banco de dados locais no Termux
-if (!fs.existsSync('./database')) fs.mkdirSync('./database');
-if (!fs.existsSync('./database/aluguel.json')) fs.writeFileSync('./database/aluguel.json', JSON.stringify({}));
-if (!fs.existsSync('./database/carteira.json')) fs.writeFileSync('./database/carteira.json', JSON.stringify({}));
-if (!fs.existsSync('./database/warns.json')) fs.writeFileSync('./database/warns.json', JSON.stringify({}));
+// Carregar configurações
+const settingsPath = path.resolve(__dirname, 'settings.json');
+let settings = {
+  botName: 'Alastor',
+  creator: '© ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪',
+  ownerNumber: '5511999999999',
+  prefix: '!',
+  menuThumb: 'https://i.ibb.co/68v88Qc/alastor-menu.jpg',
+  welcomeMessage: true
+};
 
-// Carrega configurações
-let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'));
+if (fs.existsSync(settingsPath)) {
+  try {
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+  } catch (e) {
+    console.error('Erro ao ler settings.json:', e);
+  }
+}
 
-// Banner estilo Nazuna / Alastor no Termux
-console.clear();
-cfonts.say(settings.botName.toUpperCase(), {
-  font: 'block',
-  align: 'center',
-  colors: ['red', 'candy']
-});
-console.log(chalk.red.bold(`  ┌──────────────────────────────────────────────────┐`));
-console.log(chalk.red.bold(`  │ 📻 BOT: ${settings.botName.padEnd(41)}│`));
-console.log(chalk.red.bold(`  │ 👑 CRIADOR: ${settings.creator.padEnd(37)}│`));
-console.log(chalk.red.bold(`  │ ⚡ PREFIXO: ${settings.prefix.padEnd(39)}│`));
-console.log(chalk.red.bold(`  │ 💼 MODO ALUGUEL: ${(settings.rentMode ? 'ATIVADO [ON]' : 'DESATIVADO [OFF]').padEnd(33)}│`));
-console.log(chalk.red.bold(`  │ 📡 FREQUÊNCIA: ${settings.radioFrequency.padEnd(35)}│`));
-console.log(chalk.red.bold(`  │ 🌐 GITHUB: https://github.com/theoofcx-art/Bot-alastor │`));
-console.log(chalk.red.bold(`  └──────────────────────────────────────────────────┘\n`));
+// Handler de comandos do bot
+const alastorHandler = require('./alastor.js');
 
-// Interface para leitura de número no terminal do Termux
+// Interface de linha de comando para pareamento (Padrão Nazuna Bot)
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
 const question = (text) => new Promise((resolve) => rl.question(text, resolve));
 
-async function startAlastorBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('./session');
-  const { version } = await fetchLatestBaileysVersion();
+async function startAlastor() {
+  console.clear();
+
+  // Banner no estilo Nazuna Bot (DevTokyoVx/nazuna)
+  cfonts.say('ALASTOR', {
+    font: 'block',
+    align: 'center',
+    colors: ['red', 'white']
+  });
+
+  cfonts.say(`Criador: ${settings.creator}\nBot 100% Editavel e Descriptografado`, {
+    font: 'console',
+    align: 'center',
+    colors: ['magenta']
+  });
+
+  console.log(chalk.red.bold('═'.repeat(60)));
+  console.log(chalk.cyan.bold(`  [+] Nome do Bot: `) + chalk.white.bold(settings.botName));
+  console.log(chalk.cyan.bold(`  [+] Prefixo:     `) + chalk.yellow.bold(settings.prefix));
+  console.log(chalk.cyan.bold(`  [+] Criador:     `) + chalk.white.bold(settings.creator));
+  console.log(chalk.cyan.bold(`  [+] GitHub:      `) + chalk.underline.cyan('https://github.com/theoofcx-art/Bot-alastor'));
+  console.log(chalk.red.bold('═'.repeat(60)) + '\n');
+
+  // Diretório de sessão estilo Nazuna
+  const sessionDir = path.resolve(__dirname, 'session');
+  if (!fs.existsSync(sessionDir)) {
+    fs.mkdirSync(sessionDir, { recursive: true });
+  }
+
+  const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
+  const { version, isLatest } = await fetchLatestBaileysVersion();
+
+  console.log(chalk.gray(`[INFO] Usando Baileys v${version.join('.')} (Última versão: ${isLatest})`));
+
+  let usePairingCode = false;
+  let phoneNumber = '';
+
+  // Se já tem credenciais salvas, conecta direto sem perguntar
+  const credsFile = path.join(sessionDir, 'creds.json');
+  const hasExistingSession = fs.existsSync(credsFile);
+
+  if (!hasExistingSession) {
+    console.log(chalk.yellow.bold('\nSelecione o método de conexão (Padrão Nazuna Bot):'));
+    console.log(chalk.white(' [01] ') + chalk.cyan('Conectar via QR Code (Requer 2 aparelhos)'));
+    console.log(chalk.white(' [02] ') + chalk.green.bold('Conectar via Código de Pareamento (Recomendado - 8 dígitos)\n'));
+
+    const choice = (await question(chalk.magenta('Digite sua opção [01 ou 02]: '))).trim();
+
+    if (choice === '02' || choice === '2') {
+      usePairingCode = true;
+      phoneNumber = (await question(chalk.yellow('\nDigite seu número com DDD (ex: 5511999998888): '))).replace(/[^0-9]/g, '');
+      if (!phoneNumber) {
+        console.log(chalk.red('Número inválido! Usando número do dono em settings.json...'));
+        phoneNumber = settings.ownerNumber.replace(/[^0-9]/g, '');
+      }
+    }
+  }
 
   const sock = makeWASocket({
     version,
-    logger: pino({ level: 'silent' }),
-    printQRInTerminal: false,
+    logger: P({ level: 'silent' }),
+    printQRInTerminal: !usePairingCode && !hasExistingSession,
     auth: state,
-    browser: ['Ubuntu', 'Chrome', '20.0.04'],
+    browser: Browsers.ubuntu('Chrome'),
+    connectTimeoutMs: 60000,
+    defaultQueryTimeoutMs: 60000,
+    keepAliveIntervalMs: 10000,
+    generateHighQualityLinkPreview: true,
+    syncFullHistory: false
   });
 
-  // Conexão por código de pareamento (Pairing Code)
-  if (!sock.authState.creds.registered) {
-    console.log(chalk.yellow.bold('\n[?] Conectando via Código de Pareamento do WhatsApp...'));
-    let phoneNumber = settings.ownerNumber;
-    
-    if (!phoneNumber || phoneNumber === '5511999999999') {
-      phoneNumber = await question(
-        chalk.cyan.bold('[+] Digite o número com DDD e DDI (ex: 5511988887777): ')
-      );
-    }
+  // Salvar credenciais automaticamente
+  sock.ev.on('creds.update', saveCreds);
 
-    phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
-
+  // Solicitar código de pareamento estilo Nazuna se escolhido
+  if (usePairingCode && !hasExistingSession && !sock.authState.creds.registered) {
     setTimeout(async () => {
       try {
+        console.log(chalk.cyan(`\n[+] Solicitando Código de Pareamento para +${phoneNumber}...`));
         const code = await sock.requestPairingCode(phoneNumber);
-        console.log(chalk.green.bold('\n┌───────────────────────────────────────────────┐'));
-        console.log(chalk.green.bold(`│ 🔑 SEU CÓDIGO DE PAREAMENTO:  ${chalk.white.bgRed.bold(' ' + code + ' ')}  │`));
-        console.log(chalk.green.bold('└───────────────────────────────────────────────┘\n'));
-        console.log(chalk.cyan('👉 No seu WhatsApp: Aparelhos conectados > Conectar com código de telefone.\n'));
+        const formattedCode = code?.match(/.{1,4}/g)?.join('-') || code;
+
+        console.log('\n' + chalk.bgRed.white.bold('   CÓDIGO DE PAREAMENTO DO ALASTOR BOT   '));
+        console.log(chalk.red.bold('╔════════════════════════════════════════╗'));
+        console.log(chalk.red.bold('║  SEU CÓDIGO: ') + chalk.greenBright.bold(formattedCode.padEnd(25)) + chalk.red.bold('║'));
+        console.log(chalk.red.bold('╚════════════════════════════════════════╝'));
+        console.log(chalk.white('👉 No WhatsApp: ') + chalk.yellow('Aparelhos Conectados > Conectar com código de número de telefone\n'));
       } catch (err) {
-        console.error(chalk.red('[-] Erro ao solicitar código de pareamento:'), err);
+        console.error(chalk.red('[!] Erro ao gerar código de pareamento:'), err.message || err);
       }
     }, 3000);
   }
 
-  sock.ev.on('creds.update', saveCreds);
-
+  // Monitorar conexão
   sock.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect } = update;
+    const { connection, lastDisconnect, qr } = update;
+
+    if (qr && !usePairingCode) {
+      console.log(chalk.cyan('[QR] Escaneie o QR Code acima para conectar.'));
+    }
+
+    if (connection === 'open') {
+      console.log('\n' + chalk.bgGreen.black.bold('   ALASTOR BOT CONECTADO COM SUCESSO!   \n'));
+      console.log(chalk.green(`[✔] Conectado como: ${sock.user?.name || settings.botName} (${sock.user?.id.split(':')[0]})`));
+      console.log(chalk.cyan(`[✔] Criador: ${settings.creator}`));
+      console.log(chalk.yellow(`[✔] Digite ${settings.prefix}menu no WhatsApp para ver os comandos!\n`));
+    }
 
     if (connection === 'close') {
-      const shouldReconnect =
-        lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
-      if (shouldReconnect) {
-        startAlastorBot();
+      const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+      console.log(chalk.red(`[-] Conexão encerrada. Motivo: ${reason}`));
+
+      if (reason === DisconnectReason.loggedOut) {
+        console.log(chalk.red.bold('[!] Desconectado do WhatsApp. Apagando sessão antiga...'));
+        try {
+          fs.rmSync(sessionDir, { recursive: true, force: true });
+        } catch (_) {}
+        startAlastor();
       } else {
-        console.log(chalk.red.bold('[-] Sessão finalizada. Exclua a pasta ./session e reabra o bot.'));
+        console.log(chalk.yellow('[⟳] Reconectando ao WhatsApp em 3 segundos...'));
+        setTimeout(startAlastor, 3000);
       }
-    } else if (connection === 'open') {
-      console.log(chalk.green.bold(`\n[✓] ${settings.botName} conectado com sucesso ao WhatsApp!`));
-      console.log(chalk.magenta.bold(`[✓] Criador oficial: ${settings.creator}\n`));
     }
   });
 
-  // Evento de boas-vindas / despedida e antifake
-  sock.ev.on('group-participants.update', async (anu) => {
-    try {
-      const from = anu.id;
-      if (anu.action === 'add') {
-        for (const num of anu.participants) {
-          if (settings.antiFake && !num.startsWith('55')) {
-            await sock.sendMessage(from, { text: `🚫 *[ANTI-FAKE]* Número estrangeiro detectado (+${num.split('@')[0]}). Removido por segurança!` });
-            await sock.groupParticipantsUpdate(from, [num], 'remove');
-            continue;
-          }
-          if (settings.welcomeMessage) {
-            await sock.sendMessage(from, { text: `👋 Olá @${num.split('@')[0]}!\n${settings.welcomeText}`, mentions: [num] });
-          }
-        }
-      } else if (anu.action === 'remove' && settings.welcomeMessage) {
-        for (const num of anu.participants) {
-          await sock.sendMessage(from, { text: `🚪 @${num.split('@')[0]} saiu do grupo.\n${settings.goodbyeText}`, mentions: [num] });
-        }
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
-  // Ouvinte de mensagens recebidas
-  const handleMessage = require('./alastor.js');
+  // Mensagens recebidas
   sock.ev.on('messages.upsert', async (chatUpdate) => {
     try {
       if (!chatUpdate.messages) return;
-      const m = chatUpdate.messages[0];
-      if (!m.message) return;
-      if (m.key && m.key.remoteJid === 'status@broadcast') return;
-
-      await handleMessage(sock, m, settings);
+      for (const msg of chatUpdate.messages) {
+        if (!msg.message) continue;
+        await alastorHandler(sock, msg, settings);
+      }
     } catch (err) {
-      console.error(chalk.red('[ERROR ALASTOR]:'), err);
+      console.error(chalk.red('[ERRO NO HANDLER]:'), err);
+    }
+  });
+
+  // Boas-vindas / Saída em grupos
+  sock.ev.on('group-participants.update', async (event) => {
+    try {
+      const { id, participants, action } = event;
+      if (!settings.welcomeMessage) return;
+
+      const groupMetadata = await sock.groupMetadata(id).catch(() => null);
+      const groupName = groupMetadata?.subject || 'Grupo';
+
+      for (const num of participants) {
+        const userTag = `@${num.split('@')[0]}`;
+
+        if (action === 'add') {
+          const welcome = `╭┈⊰ 🌸 『 *${settings.botName}* 』\n` +
+            `┊ ✨ Seja bem-vindo(a) ${userTag}!\n` +
+            `┊ 🏷️ Grupo: *${groupName}*\n` +
+            `┊ 📜 Leia as regras e divirta-se!\n` +
+            `┊ 👑 Criador: *${settings.creator}*\n` +
+            `╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯`;
+
+          await sock.sendMessage(id, {
+            text: welcome,
+            mentions: [num]
+          });
+        } else if (action === 'remove') {
+          const bye = `╭┈⊰ 🌸 『 *${settings.botName}* 』\n` +
+            `┊ 👋 ${userTag} saiu do grupo *${groupName}*.\n` +
+            `┊ Menos uma alma na nossa frequência!\n` +
+            `╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯`;
+
+          await sock.sendMessage(id, {
+            text: bye,
+            mentions: [num]
+          });
+        }
+      }
+    } catch (e) {
+      // Ignora erro de envio de boas-vindas
     }
   });
 
   return sock;
 }
 
-startAlastorBot();
+startAlastor().catch((err) => {
+  console.error(chalk.red('Erro fatal ao iniciar Alastor Bot:'), err);
+});

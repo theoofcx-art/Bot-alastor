@@ -21,6 +21,8 @@ export async function exportBotZip(config: BotConfig): Promise<void> {
   folder.file('settings.json', generateSettingsJson(config));
   folder.file('package.json', generatePackageJson(config));
   folder.file('iniciar.sh', generateIniciarSh(config));
+  folder.file('start.sh', generateIniciarSh(config));
+  folder.file('.npmrc', 'legacy-peer-deps=true\nbin-links=false\n');
   folder.file('termux.sh', generateTermuxScript(config));
   folder.file('TUTORIAL.md', generateTutorialMd(config));
 

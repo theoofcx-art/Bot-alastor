@@ -6,6 +6,7 @@ import {
   generateAlastorJs,
   generateSettingsJson,
   generatePackageJson,
+  generateIniciarSh,
   generateTermuxScript,
   generateTutorialMd,
 } from '../data/botTemplates';
@@ -22,7 +23,7 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
   isDownloading,
 }) => {
   const [selectedFile, setSelectedFile] = useState<
-    'index.js' | 'alastor.js' | 'settings.json' | 'package.json' | 'termux.sh' | 'TUTORIAL.md' | 'database/aluguel.json'
+    'index.js' | 'alastor.js' | 'settings.json' | 'package.json' | 'start.sh' | '.npmrc' | 'TUTORIAL.md' | 'database/aluguel.json'
   >('index.js');
   const [copied, setCopied] = useState(false);
 
@@ -46,7 +47,8 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
     'alastor.js': generateAlastorJs(config),
     'settings.json': generateSettingsJson(config),
     'package.json': generatePackageJson(config),
-    'termux.sh': generateTermuxScript(config),
+    'start.sh': generateIniciarSh(config),
+    '.npmrc': 'legacy-peer-deps=true\nbin-links=false\n',
     'TUTORIAL.md': generateTutorialMd(config),
     'database/aluguel.json': sampleAluguelJson,
   };
@@ -71,11 +73,12 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
 
   const filesList = [
     { name: 'index.js', icon: '⚡', desc: 'Conexão Baileys + Pairing Code' },
-    { name: 'alastor.js', icon: '📻', desc: 'Comandos, Aluguel e Menus' },
+    { name: 'alastor.js', icon: '📻', desc: 'Comandos, Aluguel e Menus Florais' },
     { name: 'settings.json', icon: '⚙️', desc: 'Configurações e Dono Oficial' },
+    { name: 'start.sh', icon: '🚀', desc: 'Inicializador Anti-Queda Nazuna' },
+    { name: '.npmrc', icon: '🛡️', desc: 'Blindagem Anti-Erro Termux' },
+    { name: 'package.json', icon: '📦', desc: 'Dependências Oficiais Baileys' },
     { name: 'database/aluguel.json', icon: '💼', desc: 'Banco de Dados de Aluguel' },
-    { name: 'package.json', icon: '📦', desc: 'Dependências do Node.js' },
-    { name: 'termux.sh', icon: '📱', desc: 'Script Instalador Termux' },
     { name: 'TUTORIAL.md', icon: '📖', desc: 'Manual de Instalação' },
   ];
 
