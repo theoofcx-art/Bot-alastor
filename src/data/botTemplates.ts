@@ -1040,6 +1040,29 @@ O bot continuará no grupo, mas para liberar os comandos é necessário renovar.
 `;
 }
 
+export function generateIniciarSh(config: BotConfig): string {
+  return `#!/bin/bash
+# ==============================================================
+# Script de Inicialização Automática do Alastor Bot
+# Criador: ${config.creator}
+# ==============================================================
+
+echo "=================================================="
+echo "  📻 INICIANDO ALASTOR BOT..."
+echo "  👑 CRIADOR: ${config.creator}"
+echo "=================================================="
+
+# Se a pasta node_modules não existir, instala automaticamente!
+if [ ! -d "node_modules" ]; then
+  echo "[+] Instalando dependências automaticamente (apenas na 1ª vez)..."
+  npm install
+fi
+
+echo "[+] Ligando o bot..."
+node index.js
+`;
+}
+
 export function generateTermuxScript(config: BotConfig): string {
   return `#!/bin/bash
 # ====================================================================

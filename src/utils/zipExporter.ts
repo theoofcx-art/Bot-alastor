@@ -5,6 +5,7 @@ import {
   generateAlastorJs,
   generateSettingsJson,
   generatePackageJson,
+  generateIniciarSh,
   generateTermuxScript,
   generateTutorialMd,
 } from '../data/botTemplates';
@@ -19,6 +20,7 @@ export async function exportBotZip(config: BotConfig): Promise<void> {
   folder.file('alastor.js', generateAlastorJs(config));
   folder.file('settings.json', generateSettingsJson(config));
   folder.file('package.json', generatePackageJson(config));
+  folder.file('iniciar.sh', generateIniciarSh(config));
   folder.file('termux.sh', generateTermuxScript(config));
   folder.file('TUTORIAL.md', generateTutorialMd(config));
 
