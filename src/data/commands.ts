@@ -496,12 +496,24 @@ export const BOT_COMMANDS: CommandItem[] = [
     description: 'Envia um desafio insano para cumprir no grupo',
   },
 
-  // --- MENU FIGURINHAS ---
+  // --- MENU FIGURINHAS (ESTILO NAZUNA / ALASTOR) ---
+  {
+    name: 'menusticker',
+    category: 'figurinhas',
+    usage: '!menusticker',
+    description: 'Abre o menu completo de criação e gerenciamento de figurinhas',
+  },
   {
     name: 's',
     category: 'figurinhas',
     usage: '!s (com imagem ou vídeo)',
     description: 'Transforma qualquer imagem ou vídeo curto em figurinha',
+  },
+  {
+    name: 'sticker2',
+    category: 'figurinhas',
+    usage: '!sticker2',
+    description: 'Cria figurinha sem cortar as bordas originais',
   },
   {
     name: 'toimg',
@@ -510,16 +522,187 @@ export const BOT_COMMANDS: CommandItem[] = [
     description: 'Converte uma figurinha estática de volta para foto',
   },
   {
+    name: 'ttp',
+    category: 'figurinhas',
+    usage: '!ttp <texto>',
+    description: 'Cria figurinha estática com texto estilizado',
+  },
+  {
     name: 'attp',
     category: 'figurinhas',
     usage: '!attp <texto>',
     description: 'Cria uma figurinha animada com texto em cores psicodélicas',
   },
   {
+    name: 'sbg',
+    category: 'figurinhas',
+    usage: '!sbg (com foto)',
+    description: 'Remove o fundo da imagem e gera figurinha transparente',
+  },
+  {
+    name: 'sfundo',
+    category: 'figurinhas',
+    usage: '!sfundo (com foto)',
+    description: 'Cria figurinha com moldura circular e fundo colorido',
+  },
+  {
+    name: 'qc',
+    category: 'figurinhas',
+    usage: '!qc <texto ou respondendo msg>',
+    description: 'Cria figurinha de citação com foto de perfil e balão de fala',
+  },
+  {
+    name: 'brat',
+    category: 'figurinhas',
+    usage: '!brat <seu texto>',
+    description: 'Gera figurinha estilo capa do álbum Brat (verde neon com texto borrado)',
+  },
+  {
+    name: 'bratvid',
+    category: 'figurinhas',
+    usage: '!bratvid <seu texto>',
+    description: 'Gera figurinha em vídeo animado estilo Brat pulsante',
+  },
+  {
+    name: 'take',
+    category: 'figurinhas',
+    usage: '!take <pack | autor>',
+    description: 'Altera o autor e pacote de uma figurinha existente',
+  },
+  {
+    name: 'rename',
+    category: 'figurinhas',
+    usage: '!rename <novo_pack | novo_autor>',
+    description: 'Renomeia os metadados do pacote de figurinhas do bot',
+  },
+  {
+    name: 'figurinhas',
+    category: 'figurinhas',
+    usage: '!figurinhas',
+    description: 'Envia um lote aleatório de figurinhas divertidas',
+  },
+  {
+    name: 'figualeatoria',
+    category: 'figurinhas',
+    usage: '!figualeatoria',
+    description: 'Envia uma figurinha aleatória do banco de dados',
+  },
+  {
     name: 'emojimix',
     category: 'figurinhas',
     usage: '!emojimix 😎+🔥',
     description: 'Funde dois emojis em uma figurinha inédita',
+  },
+
+  // --- FRASES & INTERAÇÕES ---
+  {
+    name: 'conselho',
+    category: 'membros',
+    usage: '!conselho',
+    description: 'Envia um conselho sábio (ou sarcástico) do Alastor',
+  },
+  {
+    name: 'cantada',
+    category: 'brincadeiras',
+    usage: '!cantada',
+    description: 'Envia uma cantada infalível para usar no crush',
+  },
+  {
+    name: 'piada',
+    category: 'brincadeiras',
+    usage: '!piada',
+    description: 'Conta uma piada hilária para descontrair o grupo',
+  },
+  {
+    name: 'charada',
+    category: 'brincadeiras',
+    usage: '!charada',
+    description: 'Envia o clássico "o que é o que é?" com resposta',
+  },
+  {
+    name: 'chute',
+    category: 'brincadeiras',
+    usage: '!chute <@membro>',
+    description: 'Dá uma bicuda voadora no participante',
+  },
+  {
+    name: 'soco',
+    category: 'brincadeiras',
+    usage: '!soco <@membro>',
+    description: 'Dá um cruzado de direita no participante',
+  },
+  {
+    name: 'morder',
+    category: 'brincadeiras',
+    usage: '!morder <@membro>',
+    description: 'Dá uma mordidinha carinhosa ou feroz',
+  },
+  {
+    name: 'lamber',
+    category: 'brincadeiras',
+    usage: '!lamber <@membro>',
+    description: 'Dá uma lambida provocativa no participante',
+  },
+  {
+    name: 'cafune',
+    category: 'brincadeiras',
+    usage: '!cafune <@membro>',
+    description: 'Faz um cafuné gostoso para acalmar',
+  },
+  {
+    name: 'tictactoe',
+    category: 'brincadeiras',
+    usage: '!tictactoe @membro',
+    description: 'Inicia uma partida de Jogo da Velha contra outro membro',
+  },
+  {
+    name: 'connect4',
+    category: 'brincadeiras',
+    usage: '!connect4 @membro',
+    description: 'Inicia partida de 4 em Linha no chat',
+  },
+  {
+    name: 'uno',
+    category: 'brincadeiras',
+    usage: '!uno criar',
+    description: 'Inicia ou participa de uma partida multiplayer de Uno',
+  },
+
+  // --- DESIGN & SISTEMAS DO DONO ---
+  {
+    name: 'designmenu',
+    category: 'dono',
+    usage: '!designmenu',
+    description: 'Configura bordas, separadores e ícones personalizados do menu',
+    isOwnerOnly: true,
+  },
+  {
+    name: 'setborda',
+    category: 'dono',
+    usage: '!setborda <borda>',
+    description: 'Customiza a borda superior do menu do bot',
+    isOwnerOnly: true,
+  },
+  {
+    name: 'setpersonalidade',
+    category: 'dono',
+    usage: '!setpersonalidade <estilo>',
+    description: 'Altera o tom de voz e humor da assistente do bot',
+    isOwnerOnly: true,
+  },
+  {
+    name: 'tm',
+    category: 'dono',
+    usage: '!tm <mensagem>',
+    description: 'Transmite uma mensagem oficial para todos os grupos',
+    isOwnerOnly: true,
+  },
+  {
+    name: 'divdono',
+    category: 'dono',
+    usage: '!divdono send',
+    description: 'Envia anúncio ou divulgação programada nos grupos',
+    isOwnerOnly: true,
   },
 
   // --- MENU DOWNLOADS & IA ---

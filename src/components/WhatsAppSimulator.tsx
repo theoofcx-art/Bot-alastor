@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Image as ImageIcon, Smile, MoreVertical, Search, CheckCheck, Sparkles, RefreshCw, Radio, Coins, ShieldAlert, Clock } from 'lucide-react';
+import { Send, Image as ImageIcon, Smile, MoreVertical, Search, CheckCheck, Sparkles, RefreshCw, Radio, Coins, ShieldAlert, Clock, Sticker } from 'lucide-react';
 import { BotConfig, ChatMessage } from '../types/bot';
+import { menuDono, menubn, menuSticker } from '../data/menusCode';
 
 interface WhatsAppSimulatorProps {
   config: BotConfig;
@@ -443,22 +444,114 @@ _Consiga mais moedas jogando no cassino e resgatando o daily!_`;
       // ==========================================
       // COMANDOS DE DONO
       // ==========================================
+      // ==========================================
+      // COMANDOS DE DONO (CUSTOM NAZUNA / ALASTOR STYLE)
+      // ==========================================
       case 'menudono': {
-        replyText = `╭━━━〔 👑 *PAINEL DO DONO* 〕━━━╮
-┃
-┃ 👑 *Criador:* ${config.creator}
-┃ 📻 *Bot:* ${config.botName}
-┃
-┃ 💼 *${prefix}modoaluguel <1/0>*
-┃ ⏳ *${prefix}addaluguel <dias>*
-┃ 🖼️ *${prefix}setfotomenu <url>*
-┃ ✏️ *${prefix}setbotname <nome>*
-┃ 🔑 *${prefix}setapi <chave>*
-┃ 🌐 *${prefix}setapisite <url>*
-┃ 🔄 *${prefix}reiniciar*
-┃ 📦 *${prefix}backup*
-┃
-╰━━━━━━━━━━━━━━━━━━━━━━━╯`;
+        replyText = menuDono(prefix, config.botName, 'Você');
+        break;
+      }
+
+      // ==========================================
+      // MENU FIGURINHAS (SOLICITADO)
+      // ==========================================
+      case 'menusticker':
+      case 'menustickers':
+      case 'menufigu':
+      case 'menufigurinhas': {
+        replyText = menuSticker(prefix, config.botName, 'Você');
+        break;
+      }
+
+      // ==========================================
+      // MENU BRINCADEIRAS & INTERAÇÕES (SOLICITADO)
+      // ==========================================
+      case 'menubn':
+      case 'menubrincadeira':
+      case 'menubrincadeiras': {
+        replyText = menubn(prefix, config.botName, 'Você');
+        break;
+      }
+
+      // --- COMANDOS DE FIGURINHAS ---
+      case 'brat': {
+        const textBrat = q || 'alastor';
+        replyText = `🟩 *[FIGURINHA BRAT]* 🟩\n\n${textBrat.toLowerCase()}\n\n🎨 _Figurinha estilo Charli XCX (fundo verde neon e texto borrado) criada e enviada com sucesso!_`;
+        break;
+      }
+
+      case 'bratvid': {
+        const textBrat = q || 'alastor';
+        replyText = `🟩 *[STICKER DE VÍDEO BRAT]* 🟩\n\n${textBrat.toLowerCase()}\n\n✨ _Figurinha animada em vídeo pulsante gerada em 60fps!_`;
+        break;
+      }
+
+      case 'qc': {
+        const quote = q || 'O sorriso é a melhor ferramenta de um demônio!';
+        replyText = `💬 *[QUOTE CARD - FIGURINHA DE CITAÇÃO]*\n\n"${quote}"\n\n— @Você • ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}\n\n🏷️ _Figurinha estilo balão de fala com sua foto de perfil gerada com sucesso!_`;
+        break;
+      }
+
+      case 'take': {
+        const packName = q.split('|')[0]?.trim() || 'Alastor Pack';
+        const authorName = q.split('|')[1]?.trim() || config.creator;
+        replyText = `✂️ *[FIGURINHA ROUBADA COM SUCESSO!]*\n\n📦 *Novo Pacote:* ${packName}\n👑 *Novo Autor:* ${authorName}\n\nFigurinha reenviada com seus metadados personalizados!`;
+        break;
+      }
+
+      case 'ttp': {
+        replyText = `🎨 *[FIGURINHA TTP]*\n\nTexto: "${q || 'Alastor'}"\nFonte: Impact Heavy / Texto Estático\n\nFigurinha enviada com sucesso!`;
+        break;
+      }
+
+      case 'attp': {
+        replyText = `🌈 *[FIGURINHA ATTP ANIMADA]*\n\nTexto: "${q || 'Alastor'}"\nEfeito: Cores piscantes psicodélicas em GIF!\n\nFigurinha animada enviada!`;
+        break;
+      }
+
+      case 'sbg': {
+        replyText = `🪄 *[REMOVEDOR DE FUNDO - SBG]*\n\nInteligência artificial removeu o fundo da imagem!\nFigurinha recortada em PNG transparente enviada!`;
+        break;
+      }
+
+      case 'sfundo': {
+        replyText = `🟣 *[FIGURINHA REDONDA]*\n\nFoto enquadrada em círculo com borda neon e fundo gradiente enviada!`;
+        break;
+      }
+
+      // --- JOGOS E FRASES ---
+      case 'conselho': {
+        const conselhos = [
+          `"Nunca revele todo o seu repertório na primeira transmissão, meu caro! E acima de tudo... sorria!"`,
+          `"Seja como a frequência do rádio: alguns não suportam seu volume, mas os escolhidos sintonizam com prazer."`,
+          `"O tempo gasto se preocupando com a opinião alheia é tempo perdido que você poderia usar dominando o mundo!"`,
+        ];
+        replyText = `📜 *[CONSELHO DO ALASTOR]*:\n\n${conselhos[Math.floor(Math.random() * conselhos.length)]}`;
+        break;
+      }
+
+      case 'cantada': {
+        replyText = `💘 *[CANTADA INFALÍVEL]*:\n\n"Você não é sinal de rádio pirata, mas invadiu todos os meus pensamentos sem pedir licença!" 😉`;
+        break;
+      }
+
+      case 'piada': {
+        replyText = `🤣 *[PIADA DO ALASTOR]*:\n\n"Por que o rádio do inferno nunca enguiça?\nPorque o sinal é quente e o entretenimento é eterno!" Ha ha ha!`;
+        break;
+      }
+
+      case 'charada': {
+        replyText = `❓ *[O QUE É, O QUE É?]*:\n\n"Tem dentes mas não morde, anda pela cabeça de todo mundo mas não tem pernas?"\n\n💡 *Resposta:* O pente!`;
+        break;
+      }
+
+      case 'tictactoe': {
+        replyText = `🎮 *[JOGO DA VELHA - ALASTOR BOT]*\n\n❌ ┃ ⭕ ┃ ⬜\n━━╋━━╋━━\n⬜ ┃ ❌ ┃ ⬜\n━━╋━━╋━━\n⬜ ┃ ⬜ ┃ ⭕\n\n👉 Sua vez, @Você! Digite o número da casa (1 a 9) para jogar.`;
+        break;
+      }
+
+      case 'uno': {
+        replyText = `🃏 *[SALA DE UNO INICIADA]*\n\n🔴 Carta no topo: [ 7 Vermelho ]\n👤 Sua mão: 🔵 [ 4 Azul ], 🟢 [ +2 Verde ], 🟡 [ Bloquear ]\n\n👉 Digite *${prefix}uno jogar 2* para descer a carta!`;
         break;
       }
 
@@ -490,7 +583,13 @@ _Consiga mais moedas jogando no cassino e resgatando o daily!_`;
       }
 
       case 'dono': {
-        replyText = `👑 *CRIADOR OFICIAL DO BOT:*\n\n${config.creator}\n\n📱 *Número cadastrado:* +${config.ownerNumber}\n📻 *Versão:* Alastor v2.8 (Aluguel, Moderação e Economia)`;
+        replyText = `👑 *CRIADOR OFICIAL DO BOT:*\n\n${config.creator}\n\n📱 *Número cadastrado:* +${config.ownerNumber}\n📻 *Versão:* Alastor v2.8 (Aluguel, Moderação e Economia)\n🌐 *GitHub:* https://github.com/theoofcx-art/Bot-alastor`;
+        break;
+      }
+
+      case 'atualizar':
+      case 'update': {
+        replyText = `🔄 *[ATUALIZADOR DO ALASTOR BOT]* 🔄\n\n🌐 *Repositório Oficial:* https://github.com/theoofcx-art/Bot-alastor\n⏳ Verificando novos commits...\n\n[■■■■■■■■■■] 100%\n✅ *Git pull concluído com sucesso!*\n📦 Dependências e novos menus de figurinhas sincronizados.\n📻 O bot foi reiniciado com todos os novos comandos!`;
         break;
       }
 
@@ -518,10 +617,15 @@ _Consiga mais moedas jogando no cassino e resgatando o daily!_`;
 
   const quickActions = [
     `${config.prefix}menu`,
+    `${config.prefix}menusticker`,
+    `${config.prefix}menudono`,
+    `${config.prefix}menubn`,
+    `${config.prefix}brat alastor`,
+    `${config.prefix}qc fala mortal`,
+    `${config.prefix}conselho`,
     `${config.prefix}addaluguel 30`,
     `${config.prefix}veraluguel`,
     `${config.prefix}saldo`,
-    `${config.prefix}daily`,
     `${config.prefix}cassino 100`,
     `${config.prefix}warn @Membro1 Flood`,
     `${config.prefix}antifake 1`,

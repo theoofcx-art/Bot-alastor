@@ -12,21 +12,24 @@ import {
 export async function exportBotZip(config: BotConfig): Promise<void> {
   const zip = new JSZip();
 
-  zip.file('index.js', generateIndexJs(config));
-  zip.file('alastor.js', generateAlastorJs(config));
-  zip.file('settings.json', generateSettingsJson(config));
-  zip.file('package.json', generatePackageJson(config));
-  zip.file('termux.sh', generateTermuxScript(config));
-  zip.file('TUTORIAL.md', generateTutorialMd(config));
+  // Cria a pasta raiz 'alastorbot' dentro do ZIP para os arquivos não ficarem soltos
+  const folder = zip.folder('alastorbot')!;
 
-  // Local databases for rent, economy, and moderation
-  zip.file('database/aluguel.json', JSON.stringify({}, null, 2));
-  zip.file('database/carteira.json', JSON.stringify({}, null, 2));
-  zip.file('database/warns.json', JSON.stringify({}, null, 2));
+  folder.file('index.js', generateIndexJs(config));
+  folder.file('alastor.js', generateAlastorJs(config));
+  folder.file('settings.json', generateSettingsJson(config));
+  folder.file('package.json', generatePackageJson(config));
+  folder.file('termux.sh', generateTermuxScript(config));
+  folder.file('TUTORIAL.md', generateTutorialMd(config));
+
+  // Bancos de dados locais dentro de alastorbot/database/
+  folder.file('database/aluguel.json', JSON.stringify({}, null, 2));
+  folder.file('database/carteira.json', JSON.stringify({}, null, 2));
+  folder.file('database/warns.json', JSON.stringify({}, null, 2));
 
   // Generate zip blob
   const content = await zip.generateAsync({ type: 'blob' });
-  const filename = `${config.botName.toLowerCase().replace(/\s+/g, '-')}-termux-bot.zip`;
+  const filename = `alastorbot.zip`;
 
   // Trigger browser download
   const url = URL.createObjectURL(content);

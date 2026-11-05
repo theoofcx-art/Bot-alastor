@@ -215,8 +215,61 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
         </div>
 
         <p className="text-xs text-slate-300 leading-relaxed">
-          Os arquivos do bot devem ficar dentro da memória interna do aplicativo <strong>Termux</strong>, especificamente na pasta <code className="bg-slate-900 text-red-300 px-1.5 py-0.5 rounded font-mono">~/alastor-bot</code>. Siga uma das opções abaixo:
+          Os arquivos do bot ficam organizados dentro da pasta <code className="bg-slate-900 text-red-300 px-1.5 py-0.5 rounded font-mono">~/alastorbot</code> no seu Termux. Todos os arquivos do ZIP agora já vêm empacotados dentro dessa pasta raiz, impedindo que os arquivos fiquem soltos no seu celular!
         </p>
+
+        {/* GitHub Clone / Update Banner */}
+        <div className="bg-[#141b27] border border-red-500/40 rounded-xl p-4 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span className="text-xs font-bold text-white flex items-center gap-1.5">
+              <span className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center text-[10px]">⭐</span>
+              Comando Oficial para Instalar ou Atualizar via GitHub
+            </span>
+            <span className="text-[11px] font-mono text-red-400 truncate">
+              https://github.com/theoofcx-art/Bot-alastor
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="bg-black/60 border border-slate-800 rounded-lg p-2.5 space-y-1 text-xs">
+              <span className="text-slate-400 font-semibold block text-[11px]">
+                🚀 Instalação Nova (Clonar Repositório):
+              </span>
+              <p className="font-mono text-[11px] text-red-300 break-all select-all">
+                git clone https://github.com/theoofcx-art/Bot-alastor alastorbot && cd alastorbot && npm install && npm start
+              </p>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    'pkg update -y && pkg install nodejs git ffmpeg -y && git clone https://github.com/theoofcx-art/Bot-alastor alastorbot && cd alastorbot && npm install && npm start'
+                  );
+                  alert('Comando de instalação do GitHub copiado!');
+                }}
+                className="mt-2 w-full py-1 bg-red-600/30 hover:bg-red-600/50 text-red-200 border border-red-500/40 rounded text-[11px] cursor-pointer"
+              >
+                Copiar Comando de Instalação (Git Clone)
+              </button>
+            </div>
+
+            <div className="bg-black/60 border border-slate-800 rounded-lg p-2.5 space-y-1 text-xs">
+              <span className="text-slate-400 font-semibold block text-[11px]">
+                🔄 Atualizar para Novos Comandos (Git Pull):
+              </span>
+              <p className="font-mono text-[11px] text-emerald-300 break-all select-all">
+                cd ~/alastorbot && git pull && npm install && npm start
+              </p>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText('cd ~/alastorbot && git pull && npm install && npm start');
+                  alert('Comando de atualização (Git Pull) copiado!');
+                }}
+                className="mt-2 w-full py-1 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 rounded text-[11px] cursor-pointer"
+              >
+                Copiar Comando de Atualização (Git Pull)
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
           {/* Method 1: Downloaded ZIP */}
@@ -224,61 +277,56 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center text-[10px]">1</span>
-                Método Mais Rápido (Baixar .ZIP)
+                Método Via Arquivo .ZIP (Pasta alastorbot inclusa)
               </span>
-              <span className="text-[10px] text-emerald-400 font-medium">Recomendado</span>
+              <span className="text-[10px] text-emerald-400 font-medium">Não deixa arquivos soltos</span>
             </div>
             <p className="text-[11px] text-slate-400">
               1. Clique em <strong>"Baixar Tudo (.ZIP)"</strong> no topo.<br />
-              2. O arquivo <code className="text-slate-300 font-mono">alastor-termux-bot.zip</code> vai para a sua pasta <strong>Download</strong> do celular.<br />
-              3. Abra o Termux e cole os comandos abaixo:
+              2. O arquivo <code className="text-slate-300 font-mono">alastorbot.zip</code> será baixado na pasta Download.<br />
+              3. No Termux, copie o zip e extraia (ele criará a pasta <code className="text-red-300">alastorbot/</code> automaticamente):
             </p>
             <div className="bg-black/60 border border-slate-800 rounded-lg p-2.5 font-mono text-[11px] text-slate-200 space-y-1">
-              <p className="text-slate-500"># Dar permissão de armazenamento:</p>
+              <p className="text-slate-500"># Dar permissão e copiar o zip:</p>
               <p className="text-red-300">termux-setup-storage</p>
-              <p className="text-slate-500"># Criar pasta e descompactar:</p>
-              <p className="text-red-300">mkdir -p ~/alastor-bot</p>
-              <p className="text-red-300">cp /sdcard/Download/alastor-termux-bot.zip ~/alastor-bot/</p>
-              <p className="text-red-300">cd ~/alastor-bot && unzip alastor-termux-bot.zip</p>
-              <p className="text-slate-500"># Instalar dependências e ligar o bot:</p>
-              <p className="text-emerald-300">npm install && npm start</p>
+              <p className="text-red-300">cp /sdcard/Download/alastorbot.zip ~/</p>
+              <p className="text-slate-500"># Descompactar a pasta alastorbot:</p>
+              <p className="text-red-300">cd ~ && unzip -o alastorbot.zip</p>
+              <p className="text-slate-500"># Entrar na pasta e iniciar:</p>
+              <p className="text-emerald-300">cd ~/alastorbot && npm install && npm start</p>
             </div>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  'termux-setup-storage && mkdir -p ~/alastor-bot && cp /sdcard/Download/alastor-termux-bot.zip ~/alastor-bot/ && cd ~/alastor-bot && unzip -o alastor-termux-bot.zip && npm install && npm start'
+                  'termux-setup-storage && cp /sdcard/Download/alastorbot.zip ~/ && cd ~ && unzip -o alastorbot.zip && cd ~/alastorbot && npm install && npm start'
                 );
                 alert('Comando copiado! Cole no seu Termux.');
               }}
               className="w-full py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 rounded-lg text-xs font-medium transition cursor-pointer text-center"
             >
-              Copiar Linha de Comando Completa do Termux
+              Copiar Linha de Comando do ZIP (Termux)
             </button>
           </div>
 
-          {/* Method 2: Manual creation via nano */}
+          {/* Method 2: In-chat updater */}
           <div className="bg-[#141b27] border border-slate-700/60 rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-white flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center text-[10px]">2</span>
-                Método Manual (Copiar e Colar)
+                Atualização Automática no WhatsApp
               </span>
             </div>
             <p className="text-[11px] text-slate-400">
-              Se preferir criar os arquivos um a um sem baixar o zip:
+              Com o bot já rodando no seu Termux, você pode atualizar a qualquer momento enviando o comando de dono no WhatsApp:
             </p>
             <div className="bg-black/60 border border-slate-800 rounded-lg p-2.5 font-mono text-[11px] text-slate-200 space-y-1">
-              <p className="text-slate-500"># 1. Crie a pasta:</p>
-              <p className="text-red-300">mkdir -p ~/alastor-bot && cd ~/alastor-bot</p>
-              <p className="text-slate-500"># 2. Crie os 4 arquivos principais com nano:</p>
-              <p className="text-red-300">nano index.js</p>
-              <p className="text-red-300">nano alastor.js</p>
-              <p className="text-red-300">nano settings.json</p>
-              <p className="text-red-300">nano package.json</p>
-              <p className="text-slate-500"># (Cole o código de cada aba e salve com Ctrl+O e Ctrl+X)</p>
+              <p className="text-red-300 font-bold">{config.prefix}atualizar</p>
+              <p className="text-slate-400 text-[10px]">
+                O bot puxa as alterações do repositório <span className="text-red-300">Bot-alastor</span>, atualiza os arquivos da pasta e reinicia o rádio!
+              </p>
             </div>
             <div className="p-2 bg-slate-900/60 rounded border border-slate-800 text-[11px] text-slate-400">
-              💡 <em>Dica: O Método 1 com o arquivo <strong>.ZIP</strong> é 10x mais fácil e evita erros de digitação!</em>
+              💡 <em>Com a pasta <strong>alastorbot</strong> criada dentro do ZIP, nenhum arquivo fica solto na raiz do Termux!</em>
             </div>
           </div>
         </div>

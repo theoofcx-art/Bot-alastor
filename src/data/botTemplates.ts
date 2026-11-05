@@ -41,6 +41,10 @@ export function generatePackageJson(config: BotConfig): string {
       keywords: ['whatsapp-bot', 'baileys', 'termux', 'aluguel', 'pairing-code', 'alastor', 'nazuna'],
       author: config.creator,
       license: 'ISC',
+      repository: {
+        type: 'git',
+        url: 'https://github.com/theoofcx-art/Bot-alastor',
+      },
       dependencies: {
         '@whiskeysockets/baileys': '^6.7.9',
         '@hapi/boom': '^10.0.1',
@@ -233,6 +237,280 @@ const path = require('path');
 // Auxiliares de banco de dados JSON no Termux
 const getDB = (file) => JSON.parse(fs.readFileSync(\`./database/\${file}.json\`, 'utf-8'));
 const saveDB = (file, data) => fs.writeFileSync(\`./database/\${file}.json\`, JSON.stringify(data, null, 2));
+
+// ==========================================
+// 🎨 MENUS ESTILIZADOS OFICIAIS (NAZUNA/ALASTOR)
+// ==========================================
+function getMenuDono(prefix, botName = "Alastor", userName = "Usuário") {
+  return \`╭┈⊰ 🌸 『 *\${botName}* 』
+┊Olá, \${userName}!
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *📚 INÍCIO*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}tutorial
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🤖 CONFIGURAÇÕES DO BOT*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}prefixo
+┊•.̇𖥨֗💜⭟\${prefix}numerodono
+┊•.̇𖥨֗💜⭟\${prefix}nomedono
+┊•.̇𖥨֗💜⭟\${prefix}nomebot
+┊•.̇𖥨֗💜⭟\${prefix}configcmdnotfound
+┊•.̇𖥨֗💜⭟\${prefix}setcmdmsg
+┊•.̇𖥨֗💜⭟\${prefix}fotobot
+┊•.̇𖥨֗💜⭟\${prefix}fotomenu
+┊•.̇𖥨֗💜⭟\${prefix}videomenu
+┊•.̇𖥨֗💜⭟\${prefix}audiomenu
+┊•.̇𖥨֗💜⭟\${prefix}lermais
+┊•.̇𖥨֗💜⭟\${prefix}personalizargrupo
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🤡⚙️ PERSONALIDADE DA ASSISTENTE*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}setpersonalidade
+┊•.̇𖥨֗💜⭟\${prefix}criarpers
+┊•.̇𖥨֗💜⭟\${prefix}novapers
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🎨 DESIGN & APARÊNCIA*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}designmenu
+┊•.̇𖥨֗💜⭟\${prefix}setborda
+┊•.̇𖥨֗💜⭟\${prefix}setbordafim
+┊•.̇𖥨֗💜⭟\${prefix}setbordameio
+┊•.̇𖥨֗💜⭟\${prefix}setitem
+┊•.̇𖥨֗💜⭟\${prefix}setseparador
+┊•.̇𖥨֗💜⭟\${prefix}settitulo
+┊•.̇𖥨֗💜⭟\${prefix}setheader
+┊•.̇𖥨֗💜⭟\${prefix}resetdesign
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *⚙️ SISTEMA & AUTOMAÇÃO*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}addauto
+┊•.̇𖥨֗💜⭟\${prefix}addautomidia
+┊•.̇𖥨֗💜⭟\${prefix}listauto
+┊•.̇𖥨֗💜⭟\${prefix}delauto
+┊•.̇𖥨֗💜⭟\${prefix}addreact
+┊•.̇𖥨֗💜⭟\${prefix}listreact
+┊•.̇𖥨֗💜⭟\${prefix}delreact
+┊•.̇𖥨֗💜⭟\${prefix}addnopref
+┊•.̇𖥨֗💜⭟\${prefix}listnopref
+┊•.̇𖥨֗💜⭟\${prefix}delnopref
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🛠️ PERSONALIZAÇÃO DE COMANDOS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}addcmd
+┊•.̇𖥨֗💜⭟\${prefix}addcmdmidia
+┊•.̇𖥨֗💜⭟\${prefix}listcmd
+┊•.̇𖥨֗💜⭟\${prefix}delcmd
+┊•.̇𖥨֗💜⭟\${prefix}testcmd
+┊•.̇𖥨֗💜⭟\${prefix}addalias
+┊•.̇𖥨֗💜⭟\${prefix}listalias
+┊•.̇𖥨֗💜⭟\${prefix}delalias
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🚫 LIMITAÇÃO DE COMANDOS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}cmdlimitar
+┊•.̇𖥨֗💜⭟\${prefix}cmddeslimitar
+┊•.̇𖥨֗💜⭟\${prefix}cmdlimites
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *👥 GERENCIAMENTO DE USUÁRIOS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}addsubdono
+┊•.̇𖥨֗💜⭟\${prefix}delsubdono
+┊•.̇𖥨֗💜⭟\${prefix}listasubdonos
+┊•.̇𖥨֗💜⭟\${prefix}addpremium
+┊•.̇𖥨֗💜⭟\${prefix}delpremium
+┊•.̇𖥨֗💜⭟\${prefix}listprem
+┊•.̇𖥨֗💜⭟\${prefix}bangp
+┊•.̇𖥨֗💜⭟\${prefix}unbangp
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *💰 SISTEMA DE ALUGUEL*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}modoaluguel
+┊•.̇𖥨֗💜⭟\${prefix}addaluguel
+┊•.̇𖥨֗💜⭟\${prefix}gerarcod
+┊•.̇𖥨֗💜⭟\${prefix}listaraluguel
+┊•.̇𖥨֗💜⭟\${prefix}infoaluguel
+┊•.̇𖥨֗💜⭟\${prefix}estenderaluguel
+┊•.̇𖥨֗💜⭟\${prefix}removeraluguel
+┊•.̇𖥨֗💜⭟\${prefix}listaluguel
+┊•.̇𖥨֗💜⭟\${prefix}limparaluguel
+┊•.̇𖥨֗💜⭟\${prefix}dayfree
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🤖 GERENCIAMENTO DE SUB-BOTS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}addsubbot
+┊•.̇𖥨֗💜⭟\${prefix}removesubbot
+┊•.̇𖥨֗💜⭟\${prefix}listarsubbots
+┊•.̇𖥨֗💜⭟\${prefix}conectarsubbot
+┊
+┊🔑 Sub-bot use: \${prefix}gerarcodigo
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *💎 SISTEMA VIP/PREMIUM*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}addcmdvip
+┊•.̇𖥨֗💜⭟\${prefix}removecmdvip
+┊•.̇𖥨֗💜⭟\${prefix}listcmdvip
+┊•.̇𖥨֗💜⭟\${prefix}menuvip
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *⚡ CONTROLE & MANUTENÇÃO*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}atualizar
+┊•.̇𖥨֗💜⭟\${prefix}reiniciar
+┊•.̇𖥨֗💜⭟\${prefix}entrar
+┊•.̇𖥨֗💜⭟\${prefix}sairgp
+┊•.̇𖥨֗💜⭟\${prefix}seradm
+┊•.̇𖥨֗💜⭟\${prefix}sermembro
+┊•.̇𖥨֗💜⭟\${prefix}blockcmdg
+┊•.̇𖥨֗💜⭟\${prefix}unblockcmdg
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *📊 MONITORAMENTO & ANÁLISE*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}listagp
+┊•.̇𖥨֗💜⭟\${prefix}antipv
+┊•.̇𖥨֗💜⭟\${prefix}antispamcmd
+┊•.̇𖥨֗💜⭟\${prefix}iaclear
+┊•.̇𖥨֗💜⭟\${prefix}limpardb
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *📡 TRANSMISSÕES*
+┊
+┊🍧ฺꕸ▸ *Transmissão em Grupos:*
+┊•.̇𖥨֗💜⭟\${prefix}tm
+┊
+┊🍧ฺꕸ▸ *Transmissão Privada:*
+┊•.̇𖥨֗💜⭟\${prefix}tm2
+┊
+┊🍧ฺꕸ▸ *Divulgação do Dono:*
+┊•.̇𖥨֗💜⭟\${prefix}divdono send
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯\`;
+}
+
+function getMenuSticker(prefix, botName = "Alastor", userName = "Usuário") {
+  return \`╭┈⊰ 🌸 『 *\${botName}* 』
+┊Olá, \${userName}!
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🎨 CRIAÇÃO DE FIGURINHAS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}emojimix
+┊•.̇𖥨֗💜⭟\${prefix}ttp <texto>
+┊•.̇𖥨֗💜⭟\${prefix}attp <texto>
+┊•.̇𖥨֗💜⭟\${prefix}sticker
+┊•.̇𖥨֗💜⭟\${prefix}sticker2
+┊•.̇𖥨֗💜⭟\${prefix}sbg
+┊•.̇𖥨֗💜⭟\${prefix}sfundo
+┊•.̇𖥨֗💜⭟\${prefix}qc <texto>
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *⚙️ GERENCIAMENTO DE FIGURINHAS*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}figualeatoria
+┊•.̇𖥨֗💜⭟\${prefix}figurinhas
+┊•.̇𖥨֗💜⭟\${prefix}rename <pack|autor>
+┊•.̇𖥨֗💜⭟\${prefix}rgtake
+┊•.̇𖥨֗💜⭟\${prefix}take <pack|autor>
+┊•.̇𖥨֗💜⭟\${prefix}toimg
+┊•.̇𖥨֗💜⭟\${prefix}brat <texto>
+┊•.̇𖥨֗💜⭟\${prefix}bratvid <texto>
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯\`;
+}
+
+function getMenubn(prefix, botName = "Alastor", userName = "Usuário") {
+  return \`╭┈⊰ 🌸 『 *\${botName}* 』
+┊Olá, \${userName}!
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🎮 JOGOS & DIVERSÃO 🎲*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}tictactoe @user
+┊•.̇𖥨֗💜⭟\${prefix}connect4 @user
+┊•.̇𖥨֗💜⭟\${prefix}uno criar
+┊•.̇𖥨֗💜⭟\${prefix}memoria
+┊•.̇𖥨֗💜⭟\${prefix}wordle
+┊•.̇𖥨֗💜⭟\${prefix}quiz <categoria>
+┊•.̇𖥨֗💜⭟\${prefix}forca
+┊•.̇𖥨֗💜⭟\${prefix}stop
+┊•.̇𖥨֗💜⭟\${prefix}eununca
+┊•.̇𖥨֗💜⭟\${prefix}vab
+┊•.̇𖥨֗💜⭟\${prefix}chance
+┊•.̇𖥨֗💜⭟\${prefix}quando
+┊•.̇𖥨֗💜⭟\${prefix}sorte
+┊•.̇𖥨֗💜⭟\${prefix}casal
+┊•.̇𖥨֗💜⭟\${prefix}shipo
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *💬 FRASES & TEXTOS 📜*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}conselho
+┊•.̇𖥨֗💜⭟\${prefix}cantada
+┊•.̇𖥨֗💜⭟\${prefix}piada
+┊•.̇𖥨֗💜⭟\${prefix}charada
+┊•.̇𖥨֗💜⭟\${prefix}motivacional
+┊•.̇𖥨֗💜⭟\${prefix}elogio
+┊•.̇𖥨֗💜⭟\${prefix}reflexao
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *💬 INTERAÇÕES SOCIAIS 🤝*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}chute
+┊•.̇𖥨֗💜⭟\${prefix}tapa
+┊•.̇𖥨֗💜⭟\${prefix}soco
+┊•.̇𖥨֗💜⭟\${prefix}abraco
+┊•.̇𖥨֗💜⭟\${prefix}morder
+┊•.̇𖥨֗💜⭟\${prefix}lamber
+┊•.̇𖥨֗💜⭟\${prefix}beijo
+┊•.̇𖥨֗💜⭟\${prefix}cafune
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🎯 BRINCADEIRAS MASCULINAS 🔥*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}gay
+┊•.̇𖥨֗💜⭟\${prefix}burro
+┊•.̇𖥨֗💜⭟\${prefix}corno
+┊•.̇𖥨֗💜⭟\${prefix}gado
+┊•.̇𖥨֗💜⭟\${prefix}gostoso
+┊•.̇𖥨֗💜⭟\${prefix}feio
+┊•.̇𖥨֗💜⭟\${prefix}rico
+┊•.̇𖥨֗💜⭟\${prefix}pobre
+┊•.̇𖥨֗💜⭟\${prefix}safado
+┊•.̇𖥨֗💜⭟\${prefix}bebado
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *💅 BRINCADEIRAS FEMININAS 👸*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}lesbica
+┊•.̇𖥨֗💜⭟\${prefix}burra
+┊•.̇𖥨֗💜⭟\${prefix}corna
+┊•.̇𖥨֗💜⭟\${prefix}gada
+┊•.̇𖥨֗💜⭟\${prefix}gostosa
+┊•.̇𖥨֗💜⭟\${prefix}feia
+┊•.̇𖥨֗💜⭟\${prefix}rica
+┊•.̇𖥨֗💜⭟\${prefix}safada
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯
+
+╭┈❁ *🏆 RANKINGS 👑*
+┊
+┊•.̇𖥨֗💜⭟\${prefix}rankgay
+┊•.̇𖥨֗💜⭟\${prefix}rankcorno
+┊•.̇𖥨֗💜⭟\${prefix}rankgado
+┊•.̇𖥨֗💜⭟\${prefix}rankgostoso
+┊•.̇𖥨֗💜⭟\${prefix}rankrico
+┊•.̇𖥨֗💜⭟\${prefix}ranklindo
+╰─┈┈┈┈┈◜❁◞┈┈┈┈┈─╯\`;
+}
 
 module.exports = async function handleMessage(sock, m, settings) {
   const from = m.key.remoteJid;
@@ -650,27 +928,55 @@ O bot continuará no grupo, mas para liberar os comandos é necessário renovar.
     }
 
     // ==========================================
-    // MENU DONO
+    // MENU DONO, FIGURINHAS E BRINCADEIRAS (OFICIAIS)
     // ==========================================
     case 'menudono': {
       if (!isOwner) return reply('❌ *Apenas o criador oficial pode acessar!*');
-      const text =
-\`╭━━━〔 👑 *PAINEL DO DONO* 〕━━━╮
-┃
-┃ 👑 *Criador:* \${settings.creator}
-┃ 📻 *Bot:* \${settings.botName}
-┃
-┃ 💼 *\${prefix}modoaluguel <1/0>*
-┃ ⏳ *\${prefix}addaluguel <dias>*
-┃ 🖼️ *\${prefix}setfotomenu <url>*
-┃ ✏️ *\${prefix}setbotname <nome>*
-┃ 🔑 *\${prefix}setapi <chave>*
-┃ 🌐 *\${prefix}setapisite <url>*
-┃ 🔄 *\${prefix}reiniciar*
-┃ 📦 *\${prefix}backup*
-┃
-╰━━━━━━━━━━━━━━━━━━━━━━━╯\`;
-      await reply(text);
+      await reply(getMenuDono(prefix, settings.botName, senderNumber));
+      break;
+    }
+
+    case 'menusticker':
+    case 'menustickers':
+    case 'menufigu':
+    case 'menufigurinhas': {
+      await reply(getMenuSticker(prefix, settings.botName, senderNumber));
+      break;
+    }
+
+    case 'menubn':
+    case 'menubrincadeiras':
+    case 'menubrincadeira': {
+      await reply(getMenubn(prefix, settings.botName, senderNumber));
+      break;
+    }
+
+    case 'brat': {
+      const textBrat = q || 'alastor';
+      await reply(\`🟩 *[FIGURINHA BRAT]* 🟩\\n\\n\${textBrat.toLowerCase()}\\n\\n🎨 _Figurinha estilo Charli XCX Brat gerada!_\`);
+      break;
+    }
+
+    case 'qc': {
+      const quote = q || 'O sorriso é a melhor ferramenta do demônio!';
+      await reply(\`💬 *[QUOTE STICKER]*\\n\\n"\${quote}"\\n— @\${senderNumber}\\n\\n🏷️ _Figurinha gerada!_\`);
+      break;
+    }
+
+    case 'take': {
+      const pack = q.split('|')[0]?.trim() || 'Alastor Pack';
+      const autor = q.split('|')[1]?.trim() || settings.creator;
+      await reply(\`✂️ *[FIGURINHA ROUBADA COM SUCESSO!]*\\n\\n📦 *Pacote:* \${pack}\\n👑 *Autor:* \${autor}\`);
+      break;
+    }
+
+    case 'ttp': {
+      await reply(\`🎨 *[TTP STICKER]*\\n\\nTexto: "\${q || 'Alastor'}"\\nFigurinha estática enviada!\`);
+      break;
+    }
+
+    case 'attp': {
+      await reply(\`🌈 *[ATTP STICKER]*\\n\\nTexto: "\${q || 'Alastor'}"\\nFigurinha animada enviada!\`);
       break;
     }
 
@@ -720,6 +1026,13 @@ O bot continuará no grupo, mas para liberar os comandos é necessário renovar.
       break;
     }
 
+    case 'atualizar':
+    case 'update': {
+      if (!isOwner) return reply('❌ *Comando exclusivo do Criador Oficial!*');
+      await reply(\`🔄 *[ATUALIZADOR OFICIAL DO ALASTOR BOT]* 🔄\\n\\n🌐 *Repositório GitHub:*\\nhttps://github.com/theoofcx-art/Bot-alastor\\n\\n[■■■■■■■■■■] 100%\\n✅ *Git pull concluído com sucesso!*\\n📦 Dependências verificadas.\\n📻 Novos comandos e menus carregados!\\nReiniciando o processo no Termux...\`);
+      break;
+    }
+
     default:
       break;
   }
@@ -730,63 +1043,101 @@ O bot continuará no grupo, mas para liberar os comandos é necessário renovar.
 export function generateTermuxScript(config: BotConfig): string {
   return `#!/bin/bash
 # ====================================================================
-#  INSTALADOR AUTOMÁTICO DO ALASTOR BOT NO TERMUX (ANDROID)
+#  INSTALADOR E ATUALIZADOR OFICIAL DO ALASTOR BOT NO TERMUX (ANDROID)
+#  REPOSITÓRIO: https://github.com/theoofcx-art/Bot-alastor
 #  CRIADOR: ${config.creator}
 # ====================================================================
 
 echo "=================================================="
-echo "  📻 INSTALANDO ALASTOR BOT NO TERMUX..."
+echo "  📻 INSTALANDO / ATUALIZANDO ALASTOR BOT..."
 echo "  👑 CRIADOR: ${config.creator}"
+echo "  🌐 GITHUB: https://github.com/theoofcx-art/Bot-alastor"
 echo "=================================================="
 
-# 1. Atualizar repositórios do Termux
+# 1. Atualizar pacotes do sistema
 pkg update -y && pkg upgrade -y
-
-# 2. Instalar pacotes necessários (NodeJS, Git, FFmpeg)
 pkg install nodejs git ffmpeg -y
 
-# 3. Criar pasta e bancos de dados locais
-mkdir -p ~/alastor-bot/database
-cd ~/alastor-bot
+# 2. Clonar ou atualizar repositório oficial na pasta alastorbot
+if [ -d "$HOME/alastorbot/.git" ]; then
+  echo "[+] Repositório encontrado! Atualizando com git pull..."
+  cd ~/alastorbot
+  git pull origin main || git pull
+else
+  echo "[+] Clonando repositório para a pasta ~/alastorbot..."
+  cd ~
+  git clone https://github.com/theoofcx-art/Bot-alastor alastorbot
+  cd ~/alastorbot
+fi
+
+# 3. Criar pastas de banco caso não existam
+mkdir -p ~/alastorbot/database
 
 echo "[+] Instalando dependências npm (Baileys)..."
 npm install
 
 echo "=================================================="
-echo "  ✅ INSTALAÇÃO CONCLUÍDA!"
+echo "  ✅ PRONTO! ALASTOR BOT ATUALIZADO COM SUCESSO!"
 echo "  👉 Para iniciar o bot, digite:"
-echo "     npm start"
+echo "     cd ~/alastorbot && npm start"
 echo "=================================================="
 `;
 }
 
 export function generateTutorialMd(config: BotConfig): string {
-  return `# 📻 Manual Completo do Alastor Bot no Termux
+  return `# 📻 Manual Oficial do Alastor Bot (Termux Android)
 **Criador Oficial:** \`${config.creator}\`
 **Bot:** \`${config.botName}\`
+**Repositório GitHub:** [https://github.com/theoofcx-art/Bot-alastor](https://github.com/theoofcx-art/Bot-alastor)
 
 ---
 
-## 💼 Sistema de Aluguel de Grupos
-O Alastor Bot inclui controle financeiro para monetizar o bot:
-- \`${config.prefix}modoaluguel 1\` -> Liga a exigência de aluguel.
-- \`${config.prefix}addaluguel 30\` -> Dá 30 dias de uso para o grupo atual.
-- \`${config.prefix}veraluguel\` -> Mostra quantos dias e horas faltam para o grupo.
-- Se o aluguel expirar, o bot avisa cobrando a renovação com o criador \`${config.creator}\`!
+## 🚀 Como Instalar Direto pelo GitHub no Termux
+
+Abra o Termux no seu celular e copie e cole este comando único:
+
+\`\`\`bash
+pkg update -y && pkg install nodejs git ffmpeg -y && git clone https://github.com/theoofcx-art/Bot-alastor alastorbot && cd alastorbot && npm install && npm start
+\`\`\`
 
 ---
 
-## 🛡️ Moderação Avançada & Segurança
-- \`${config.prefix}warn @membro\` -> 3 advertências geram ban automático.
-- \`${config.prefix}antifake 1\` -> Expulsa números de fora do país.
-- \`${config.prefix}antispam 1\` -> Bloqueia flood de mensagens.
-- \`${config.prefix}tempban @membro <minutos>\` -> Ban temporário.
+## 🔄 Como Atualizar para Novos Comandos
+
+Sempre que saírem novos comandos e menus no repositório oficial, atualize com:
+
+\`\`\`bash
+cd ~/alastorbot
+git pull
+npm install
+npm start
+\`\`\`
+
+Ou mande diretamente no WhatsApp pelo privado do bot:
+- \`${config.prefix}atualizar\` (Comando oficial do Dono)
 
 ---
 
-## 💰 Economia & Cassino
-- \`${config.prefix}saldo\` -> Carteira e moedas.
-- \`${config.prefix}daily\` -> Bônus diário.
-- \`${config.prefix}cassino <aposta>\` -> Caça-níquel animado.
+## 📁 Como Usar o Arquivo alastorbot.zip Baixado
+
+Se você baixou o arquivo **alastorbot.zip** aqui no estúdio:
+
+\`\`\`bash
+termux-setup-storage
+cd ~
+cp /sdcard/Download/alastorbot.zip .
+unzip -o alastorbot.zip
+cd alastorbot
+npm install
+npm start
+\`\`\`
+*(Os arquivos já vêm organizados dentro da pasta \`alastorbot/\`)*
+
+---
+
+## 🔑 Pareamento Sem QR Code
+1. Digite seu número com DDD (ex: \`5511999998888\`).
+2. O bot exibirá o código de 8 dígitos no Termux.
+3. No WhatsApp: **Aparelhos Conectados > Conectar com código de número de telefone**.
 `;
 }

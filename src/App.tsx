@@ -162,7 +162,7 @@ export default function App() {
           <div>
             <p className="text-xs font-semibold">Download Concluído!</p>
             <p className="text-[11px] text-emerald-300">
-              O arquivo <strong>alastor-termux-bot.zip</strong> está pronto para descompactar no Termux.
+              O arquivo <strong>alastorbot.zip</strong> foi baixado com a pasta <strong>alastorbot/</strong> interna pronta para o Termux.
             </p>
           </div>
         </div>
