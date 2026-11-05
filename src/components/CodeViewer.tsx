@@ -205,18 +205,57 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
         </div>
       </div>
 
-      {/* Guide: Where and How to Save in Termux */}
-      <div className="bg-[#0e1420] border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-5 h-5 text-red-400" />
-          <h3 className="text-base font-bold text-white tracking-tight">
-            📁 Onde e Como Salvar os Arquivos no Celular (Termux)?
-          </h3>
+      {/* Guide: Where and How to Save in Termux & GitHub */}
+      <div className="bg-[#0e1420] border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Terminal className="w-5 h-5 text-red-400" />
+            <h3 className="text-base font-bold text-white tracking-tight">
+              📁 Onde Salvar e Como Organizar no GitHub (Sem Arquivos Soltos)
+            </h3>
+          </div>
+          <span className="text-xs px-2.5 py-1 bg-emerald-950 text-emerald-300 border border-emerald-800/40 rounded-full font-mono">
+            pasta: ~/alastorbot
+          </span>
         </div>
 
-        <p className="text-xs text-slate-300 leading-relaxed">
-          Os arquivos do bot ficam organizados dentro da pasta <code className="bg-slate-900 text-red-300 px-1.5 py-0.5 rounded font-mono">~/alastorbot</code> no seu Termux. Todos os arquivos do ZIP agora já vêm empacotados dentro dessa pasta raiz, impedindo que os arquivos fiquem soltos no seu celular!
-        </p>
+        {/* Folder Hierarchy Preview */}
+        <div className="bg-[#111724] border border-slate-800 rounded-xl p-4">
+          <span className="text-xs font-semibold text-slate-300 block mb-2">
+            📂 Estrutura Fixa da Pasta (Já dentro do ZIP e do Bot):
+          </span>
+          <pre className="font-mono text-xs text-slate-300 leading-relaxed bg-black/60 p-3 rounded-lg border border-slate-800/80">
+{`alastorbot/
+├── ⚡ index.js          (Conexão Baileys + Código de Pareamento)
+├── 📻 alastor.js        (Todos os 70+ comandos, menus florais, aluguel)
+├── ⚙️ settings.json     (Configurações: Dono, prefixo, nome e criador)
+├── 📦 package.json      (Dependências @whiskeysockets/baileys, axios, etc.)
+├── 📱 termux.sh         (Instalador e atualizador 1-clique)
+├── 📖 TUTORIAL.md       (Manual oficial passo a passo)
+├── 📄 README.md         (Documentação)
+├── 🔒 .gitignore        (Ignora senhas, credenciais e node_modules)
+└── 📁 database/
+    ├── 💼 aluguel.json  (Controle de dias e validade dos grupos)
+    ├── 💰 carteira.json (Economia e cassino)
+    └── ⚠️ warns.json    (Advertências de moderação)`}
+          </pre>
+        </div>
+
+        {/* Explicação do Print do GitHub */}
+        <div className="bg-amber-950/30 border border-amber-600/40 rounded-xl p-4 space-y-2">
+          <div className="flex items-center gap-2 text-amber-300 text-xs font-bold">
+            <span>⚠️</span>
+            <span>Por que os arquivos do print no seu GitHub ficaram soltos?</span>
+          </div>
+          <p className="text-xs text-slate-300 leading-relaxed">
+            No print do seu repositório <strong className="text-white">theoofcx-art/Bot-alastor</strong>, foram enviados os arquivos do simulador web (como <code className="text-amber-300">vite.config.ts</code>, <code className="text-amber-300">index.html</code> e pasta <code className="text-amber-300">src/</code>).
+            Para que no seu GitHub fique <strong>somente a pasta organizada do bot (alastorbot)</strong> ou os arquivos limpos do bot:
+          </p>
+          <div className="bg-black/60 border border-amber-500/20 p-2.5 rounded font-mono text-[11px] text-amber-200">
+            git clone https://github.com/theoofcx-art/Bot-alastor<br />
+            # Basta descompactar o alastorbot.zip e dar git push!
+          </div>
+        </div>
 
         {/* GitHub Clone / Update Banner */}
         <div className="bg-[#141b27] border border-red-500/40 rounded-xl p-4 space-y-3">

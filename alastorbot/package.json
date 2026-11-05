@@ -1,0 +1,37 @@
+{
+  "name": "alastorbot",
+  "version": "2.9.0",
+  "description": "WhatsApp Bot Alastor estilo Nazuna Bot para Termux com Aluguel, Moderação e Figurinhas - Criador: © ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "whatsapp-bot",
+    "baileys",
+    "termux",
+    "aluguel",
+    "pairing-code",
+    "alastor",
+    "nazuna"
+  ],
+  "author": "© ˒˓ 𝘵𝘩ҽ͜𝘰𝘹  ݁ 🤿⃝ 𓈒 ᘡ ࣪",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theoofcx-art/Bot-alastor"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "@hapi/boom": "^10.0.1",
+    "pino": "^9.0.0",
+    "axios": "^1.7.0",
+    "chalk": "^4.1.2",
+    "cfonts": "^3.2.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "node-fetch": "^2.7.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
